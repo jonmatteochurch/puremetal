@@ -1,0 +1,40 @@
+<PureMetal_specification>
+  
+  <SimulationComponent type="quadrant" />
+  
+  <PhaseField>
+    <alpha>1.</alpha>
+    <R0>5.</R0>
+    <Delta>0.65</Delta>
+    <epsilon>0.05</epsilon>
+    <postprocess_polynomial>true</postprocess_polynomial>
+    <postprocess_cspline>true</postprocess_cspline>
+  </PhaseField>
+  
+  <Grid>
+    <upper>[30.,30.]</upper>
+    <lower>[-300.,-300.]</lower> <!-- ignore if quadrant -->
+    <spacing>[1.,1.]</spacing>
+  </Grid>
+
+  <Time type="stable">
+    <delt_max>1.</delt_max>
+    <delt_min>.0</delt_min>
+    <delt_multiplier>.9</delt_multiplier> <!-- must be < 1 -->
+    <max_Timesteps>100</max_Timesteps>
+  </Time>
+
+  <DataArchiver>
+    <filebase>output/stable</filebase>
+    <outputTimestepInterval>10</outputTimestepInterval>
+    <save label="psi" />
+    <save label="u" />
+    <save label="psi_x" />
+    <save label="psi_y" />
+    <save label="grad_psi_norm2" />
+    <save label="A" />
+    <save label="A2" />
+    <save label="Bxy" />
+  </DataArchiver>
+    
+</PureMetal_specification>
