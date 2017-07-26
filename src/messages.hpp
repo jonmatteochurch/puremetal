@@ -38,23 +38,18 @@ const std::string unknown_save_label_msg = "Unknown save label: ";
 const std::string output_dir_error_msg = "Cannot create output directory " ;
 
 inline void usage ( std::ostream & os );
-inline void parse_error ( std::ostream & os, const std::string & file );
+void parse_error ( std::ostream & os, const std::string & file );
 inline void restart_error ( std::ostream & os );
 inline void stability_error ( std::ostream & os );
 inline void fixed_progress_info ( std::ostream & os, const double & progress );
 inline void stable_progress_info ( std::ostream & os, const double & delt );
-inline void steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & v0, const double & v );
+inline void steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v0, const double & v );
     
 }
 
 inline void PureMetal::usage ( std::ostream & os )
 {
     os << "Usage: pure_metal [--restart] <input>.xml" << std::endl;
-}
-
-inline void PureMetal::parse_error ( std::ostream & os, const std::string & file )
-{
-    os << "Unable to parse input file : " << file << std::endl;
 }
 
 inline void PureMetal::restart_error ( std::ostream & os )
@@ -80,10 +75,20 @@ inline void PureMetal::stable_progress_info ( std::ostream & os, const double & 
     os << std::scientific << std::setprecision ( 5 ) << delt << std::endl;
 }
 
-inline void PureMetal::steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & v0, const double & v )
+inline void PureMetal::steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v0, const double & v )
 {
     if ( next_cell ) {
-        os << "Cell velocity: " << v << "; Delta: " << std::abs ( ( v - v0 ) / v ) << std::endl;
+        os.width ( 10 );
+        os << "Time: " ;
+        os.width ( 10 );
+        os << t;
+        os << "; Cell velocity: " ;
+        os.width ( 10 );
+        os << v;
+        os << "; Delta: ";
+        os.width ( 10 );
+        os << std::abs ( ( v - v0 ) / v );
+        os << std::endl;
     }
 }
 

@@ -84,7 +84,7 @@ void PureMetal::PostProcessor::process ( const Approximation * approximation, co
             _cell_velocity0 = _cell_velocity;
             _t = delt / ( _x - _x0 ) * ( approximation->x ( cell ) - _x0 ) + delt * ( ts - 1 );
             _dt = _t - _t0;
-            _cell_velocity = approximation->spacing ( 0 ) / _t;
+            _cell_velocity = approximation->spacing ( 0 ) / _dt;
         }
 
         _v = ( _x - _x0 ) / delt;

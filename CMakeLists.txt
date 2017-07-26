@@ -23,7 +23,7 @@ set ( CMAKE_CXX_STANDARD 11 )
 set ( CMAKE_CXX_STANDARD_REQUIRED ON )
 
 if ( CMAKE_COMPILER_IS_GNUCXX )
-  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-literal-suffix -Wcast-align -Wnoexcept -Wredundant-decls -Wlogical-op -Wstrict-null-sentinel -Wstrict-overflow=5 -Wswitch-default -Wmissing-format-attribute -Wnormalized=nfc -Wstack-protector -Winline -Wunsafe-loop-optimizations -Wuseless-cast" )
+  set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wno-literal-suffix -Wcast-align -Wnoexcept -Wredundant-decls -Wlogical-op -Wstrict-null-sentinel -Wstrict-overflow=2 -Wswitch-default -Wmissing-format-attribute -Wnormalized=nfc -Wstack-protector -Winline -Wunsafe-loop-optimizations -Wuseless-cast" )
 endif ()
 if ( ${CMAKE_CXX_COMPILER} MATCHES "ic.*" )
   set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -no-ansi-alias -Wundef -Wcast-qual -Wzero-as-null-pointer-constant -Wshadow -Wconversion -Wsign-conversion -Wabi" )
@@ -45,7 +45,7 @@ include_directories(${GSL_INCLUDE_DIRS})
 find_package ( VTK 6.1 COMPONENTS vtkIOXML NO_MODULE )
 include(${VTK_USE_FILE})
 
-add_executable(pure_metal src/main.cpp src/approximation.cpp src/csplineinterpolant.cpp src/field.cpp src/options.cpp src/polynomialinterpolant.cpp src/postprocessor.cpp src/simulation.cpp src/specifications.cpp src/vtkfile.cpp )
+add_executable(pure_metal src/main.cpp src/approximation.cpp src/csplineinterpolant.cpp src/field.cpp src/messages.cpp src/options.cpp src/polynomialinterpolant.cpp src/postprocessor.cpp src/simulation.cpp src/specifications.cpp src/vtkfile.cpp )
 
 target_link_libraries( pure_metal ${GSL_LIBRARIES} )
 target_link_libraries(pure_metal ${VTK_LIBRARIES})

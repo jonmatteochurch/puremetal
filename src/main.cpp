@@ -70,7 +70,9 @@ int main ( int argc, char ** argv )
             stable_progress_info ( std::cout, delt );
             Simulation simulation ( specifications );
             simulation.start ( delt, specifications->max_timestep() );
-            simulation.save ( );
+            if ( specifications->out_interval() ) {
+                simulation.save ( );
+            }
 
             while ( simulation.next() ) {
                 if ( ! ( stable = simulation.stable() ) ) {
@@ -84,7 +86,11 @@ int main ( int argc, char ** argv )
             if ( stable ) {
                 break;
             }
-            delt *= specifications->delt_muptiplier();
+            if ( specifications->delt_muptiplier() ) {
+                delt *= specifications->delt_muptiplier();
+            } else {
+                delt -= specifications->delt_step();
+            }
         }
     }
     break;
@@ -110,7 +116,7 @@ int main ( int argc, char ** argv )
                 delete options;
                 return 1;
             }
-            steady_state_progress_info ( std::cout, simulation.post_processor()->next_cell(), simulation.post_processor()->cell_velocity0(), simulation.post_processor()->cell_velocity() );
+            steady_state_progress_info ( std::cout, simulation.post_processor()->next_cell(), simulation.time(), simulation.post_processor()->cell_velocity0(), simulation.post_processor()->cell_velocity() );
             if ( simulation.save_timestep() ) {
                 simulation.save();
             }

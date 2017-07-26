@@ -66,6 +66,7 @@ class Specifications
     double _delt_max;
     double _delt_min;
     double _delt_multiplier;
+    double _delt_step;
 
     // steady_state
     unsigned _max_timestep;
@@ -81,7 +82,7 @@ class Specifications
 
 public:
     Specifications ( std::string input_file );
-    ~Specifications() = default;
+    ~Specifications();
 
     inline const TimeType & time_type() const;
     inline const SimulationType & simulation_type() const;
@@ -109,6 +110,7 @@ public:
     inline const double & delt_max() const;
     inline const double & delt_min() const;
     inline const double & delt_muptiplier() const;
+    inline const double & delt_step() const;
 
     inline const unsigned & max_timestep() const;
     inline const double & steady_state_threshold() const;
@@ -203,6 +205,11 @@ const double & PureMetal::Specifications::delt_min() const
 const double & PureMetal::Specifications::delt_muptiplier() const
 {
     return _delt_multiplier;
+}
+
+const double & PureMetal::Specifications::delt_step() const
+{
+    return _delt_step;
 }
 
 const unsigned & PureMetal::Specifications::max_timestep() const

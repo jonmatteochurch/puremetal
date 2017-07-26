@@ -55,7 +55,7 @@ protected:
 
     inline PostProcessor ( const double & r0, const std::string & path, const std::string & name, const bool & restart );
 
-    virtual Interpolant * create_interpolant ( const double * x, const double * y, unsigned n ) = 0;
+    virtual Interpolant * create_interpolant ( const double x[], const double y[], unsigned n ) = 0;
 
 public:
     inline virtual ~PostProcessor();

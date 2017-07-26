@@ -40,6 +40,8 @@ public:
     ~VisitFile() = default;
 
     inline void add ( const std::string & filename );
+
+    inline std::string abs_path();
 };
 
 }
@@ -49,16 +51,21 @@ PureMetal::VisitFile::VisitFile ( const std::string & path, const std::string & 
       _name ( name )
 {
     std::ofstream out;
-    out.open ( _path + "/" + _name + ".visit", append ? std::ios_base::app : std::ios_base::trunc );
+    out.open ( abs_path(), append ? std::ios_base::app : std::ios_base::trunc );
     out.close();
 }
 
 void PureMetal::VisitFile::add ( const std::string & filename )
 {
     std::ofstream out;
-    out.open ( _path + "/" + _name + ".visit", std::ios_base::app );
+    out.open ( abs_path(), std::ios_base::app );
     out << filename << std::endl;
     out.close();
+}
+
+std::string PureMetal::VisitFile::abs_path()
+{
+    return _path + "/" + _name + ".visit";
 }
 
 #endif // PUREMETAL_VISITFILE_HPP

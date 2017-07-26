@@ -276,7 +276,7 @@ bool PureMetal::Simulation::next()
         const double & v = post_processor()->cell_velocity();
         const double & v0 = post_processor()->cell_velocity0();
         double x = post_processor()->tip_position(), xm = _approximation->x ( _approximation->size ( 0 ) - 2 );
-        if ( x > xm  ) {
+        if ( x > xm ) {
             return false;
         }
         return std::abs ( ( v - v0 ) / v ) > _threshold;
@@ -299,12 +299,15 @@ void PureMetal::Simulation::save()
 
 bool PureMetal::Simulation::stable()
 {
-    for ( unsigned i ( 0 ); i < _approximation->size ( 0 ); ++i ) {
-        const double & psi = ( *_psi ) ( i, 0 );
-        if ( psi < -1. || psi > 1. ) {
-            return false;
+    for ( unsigned i = 0u; i < _approximation->size ( 0 ); ++i ) {
+        for ( unsigned j = 0u; j < _approximation->size ( 1 ); ++j ) {
+            const double & u = ( *_u ) ( i, j );
+            if ( u + _delta < -_tolerance || u > .5 * _delta ) {
+                return false;
+            }
         }
     }
     return true;
 }
+
 

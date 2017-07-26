@@ -41,6 +41,7 @@ PureMetal::Specifications::Specifications ( std::string input_file ) :
     _delt_max ( 0. ),
     _delt_min ( 0. ),
     _delt_multiplier ( 0. ),
+    _delt_step ( 0. ),
     _max_timestep ( 0 ),
     _steady_state_threshold ( 0. )
 {
@@ -106,7 +107,9 @@ PureMetal::Specifications::Specifications ( std::string input_file ) :
         _time_type = TimeType::stable;
         _delt_max = subtree.get<double> ( "delt_max" );
         _delt_min = subtree.get<double> ( "delt_min" );
-        _delt_multiplier = subtree.get<double> ( "delt_multiplier" );
+        _delt_multiplier = subtree.get ( "delt_multiplier", 0. );
+        if ( !_delt_multiplier )
+            _delt_step = subtree.get<double> ( "delt_step" );
         _max_timestep = subtree.get<unsigned> ( "max_Timesteps" );
     } else {
         throw std::runtime_error ( unknown_time_type_msg + time_type_str );
@@ -126,5 +129,10 @@ PureMetal::Specifications::Specifications ( std::string input_file ) :
             throw std::runtime_error ( unknown_save_label_msg + label );
         }
     }
+}
+
+PureMetal::Specifications::~Specifications()
+{
+    _out_labels.clear();
 }
 

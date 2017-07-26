@@ -70,7 +70,7 @@ class Simulation
     bool _post_polynomial;
     bool _post_cspline;
     std::list<PostProcessor *> _post_processors;
-    
+
     void start();
     void restart();
     void next_ts();
@@ -85,31 +85,38 @@ public:
     inline const PostProcessor * post_processor() const;
 
     void start ( const double & delt, const unsigned & timesteps );
-    void start ( const double & delt, const double & steady_state_threshold);
+    void start ( const double & delt, const double & steady_state_threshold );
     void restart ( const double & delt, const unsigned & timesteps );
     void restart ( const double & delt, const double & steady_state_threshold );
     bool next();
     void save();
     bool stable ();
+    inline double time();
     inline bool save_timestep();
     inline double progress();
 };
 
-const PostProcessor * Simulation::post_processor() const
+}
+
+const PureMetal::PostProcessor * PureMetal::Simulation::post_processor() const
 {
     return _post_processors.front();
 }
 
-double Simulation::progress()
+double PureMetal::Simulation::time()
+{
+    return static_cast<double> ( _ts ) * _delt;
+}
+
+double PureMetal::Simulation::progress()
 {
     return static_cast<double> ( _ts ) / static_cast<double> ( _maxts );
 }
 
-bool Simulation::save_timestep()
+bool PureMetal::Simulation::save_timestep()
 {
-return _out_interval && ! ( _ts % _out_interval );
+    return _out_interval && ! ( _ts % _out_interval );
 }
 
-}
 
 #endif // PUREMETAL_SIMULATION_HPP
