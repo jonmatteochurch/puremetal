@@ -33,7 +33,7 @@ set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Wdisabled-opt
 set ( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -O3" )
 
 find_package ( GSL REQUIRED )
-include_directories(${GSL_INCLUDE_DIRS})
+include_directories( SYSTEM ${GSL_INCLUDE_DIRS} )
 
 find_package ( VTK COMPONENTS vtkIOXML NO_MODULE )
 include_directories( SYSTEM ${VTK_INCLUDE_DIRS} )

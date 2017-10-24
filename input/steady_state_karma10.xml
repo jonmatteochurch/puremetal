@@ -1,0 +1,38 @@
+<PureMetal_specification>
+  
+  <SimulationComponent type="quadrant" />
+  
+  <PhaseField>
+    <Delta>0.60</Delta>
+    <epsilon>0.03</epsilon>
+    <alpha>2.</alpha>
+    <R0>5.</R0>
+    <postprocess_polynomial>true</postprocess_polynomial>
+    <postprocess_cspline>true</postprocess_cspline>
+    <stability_check>true</stability_check>
+  </PhaseField>
+  
+  <Grid>
+    <upper>[120.,60.]</upper>
+    <spacing>[.4,.4]</spacing>
+  </Grid>
+
+  <Time type="steady_state">
+    <delt>0.016</delt>
+    <steady_state_threshold>1.e-10</steady_state_threshold>
+  </Time>
+
+  <DataArchiver>
+    <filebase>output/steady_state_karma10</filebase>
+    <outputTimestepInterval>50</outputTimestepInterval>
+    <save label="psi" />
+    <save label="u" />
+    <!--save label="psi_x" />
+    <save label="psi_y" />
+    <save label="grad_psi_norm2" />
+    <save label="A" />
+    <save label="A2" />
+    <save label="Bxy" /-->
+  </DataArchiver>
+    
+</PureMetal_specification>
