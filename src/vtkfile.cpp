@@ -36,6 +36,12 @@ PureMetal::VtkFile::~VtkFile()
     }
 }
 
+bool PureMetal::VtkFile::exists()
+{
+    std::ifstream file ( abs_path() );
+    return file.good();
+}
+
 void PureMetal::VtkFile::read ( PureMetal::Field * psi, PureMetal::Field * u )
 {
     vtkXMLImageDataReader * reader = vtkXMLImageDataReader::New();

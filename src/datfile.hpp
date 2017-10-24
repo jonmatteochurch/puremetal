@@ -37,21 +37,12 @@ class DatFile
     bool operator== ( const DatFile & other ) const = delete;
 
 public:
-    inline DatFile ( const std::string & path, const std::string & name, const bool & append );
+    DatFile ( const std::string & path, const std::string & name, const bool & append );
     ~DatFile() = default;
 
     inline void add ( const unsigned & ts, const double & time, const double & x, const double & v, const double & k1, const double & k2, const double & kpar );
 };
 
-}
-
-PureMetal::DatFile::DatFile ( const std::string & path, const std::string & name, const bool & append )
-    : _path ( path ),
-      _name ( name )
-{
-    std::ofstream out;
-    out.open ( _path + "/" + _name, append ? std::ios_base::app : std::ios_base::trunc );
-    out.close();
 }
 
 void PureMetal::DatFile::add ( const unsigned int & ts, const double & time, const double & x, const double & v, const double & k1, const double & k2, const double & kpar )

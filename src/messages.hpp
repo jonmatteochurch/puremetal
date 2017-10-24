@@ -37,29 +37,14 @@ const std::string unknown_time_type_msg = "Unknown Time type: ";
 const std::string unknown_save_label_msg = "Unknown save label: ";
 const std::string output_dir_error_msg = "Cannot create output directory " ;
 
-inline void usage ( std::ostream & os );
+void usage ( std::ostream & os );
 void parse_error ( std::ostream & os, const std::string & file );
-inline void restart_error ( std::ostream & os );
-inline void stability_error ( std::ostream & os );
+void restart_error ( std::ostream & os );
+void stability_error ( std::ostream & os );
 inline void fixed_progress_info ( std::ostream & os, const double & progress );
 inline void stable_progress_info ( std::ostream & os, const double & delt );
 inline void steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v0, const double & v );
     
-}
-
-inline void PureMetal::usage ( std::ostream & os )
-{
-    os << "Usage: pure_metal [--restart] <input>.xml" << std::endl;
-}
-
-inline void PureMetal::restart_error ( std::ostream & os )
-{
-    os << "Unable to restart simulation" << std::endl;
-}
-
-inline void PureMetal::stability_error ( std::ostream & os )
-{
-    os << "Simulation is unstable" << std::endl;
 }
 
 inline void PureMetal::fixed_progress_info ( std::ostream & os, const double & progress )

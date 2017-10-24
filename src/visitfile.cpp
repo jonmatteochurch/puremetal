@@ -16,39 +16,22 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  *
  */
+ 
+#include "visitfile.hpp"
 
-#ifndef PUREMETAL_VISITFILE_HPP
-#define PUREMETAL_VISITFILE_HPP
-
-#include <string>
-#include <fstream>
-
-namespace PureMetal
+PureMetal::VisitFile::VisitFile ( const std::string & path, const std::string & name, const bool & append )
+    : _path ( path ),
+      _name ( name )
 {
-
-class VisitFile
-{
-    const std::string _path;
-    const std::string _name;
-
-    VisitFile ( const VisitFile & other ) = delete;
-    VisitFile & operator= ( const VisitFile & other ) = delete;
-    bool operator== ( const VisitFile & other ) const = delete;
-
-public:
-    VisitFile ( const std::string & path, const std::string & name, const bool & append );
-    ~VisitFile() = default;
-
-    void add ( const std::string & filename );
-
-    inline std::string abs_path();
-};
-
+    std::ofstream out;
+    out.open ( abs_path(), append ? std::ios_base::app : std::ios_base::trunc );
+    out.close();
 }
 
-std::string PureMetal::VisitFile::abs_path()
+void PureMetal::VisitFile::add ( const std::string & filename )
 {
-    return _path + "/" + _name + ".visit";
+    std::ofstream out;
+    out.open ( abs_path(), std::ios_base::app );
+    out << filename << std::endl;
+    out.close();
 }
-
-#endif // PUREMETAL_VISITFILE_HPP

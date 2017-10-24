@@ -19,7 +19,22 @@
 
 #include "messages.hpp"
 
+void PureMetal::usage ( std::ostream & os )
+{
+    os << "Usage: pure_metal [--restart] <input>.xml" << std::endl;
+}
+
 void PureMetal::parse_error ( std::ostream & os, const std::string & file )
 {
     os << "Unable to parse input file : " << file << std::endl;
+}
+
+void PureMetal::restart_error ( std::ostream & os )
+{
+    os << "Unable to restart simulation" << std::endl;
+}
+
+void PureMetal::stability_error ( std::ostream & os )
+{
+    os << "Simulation is unstable" << std::endl;
 }

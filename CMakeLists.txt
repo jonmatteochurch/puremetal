@@ -32,32 +32,15 @@ endif ()
 set ( CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic -Wall -Wextra -Wdisabled-optimization -Wformat=2 -Winit-self -Wmissing-declarations -Wmissing-include-dirs -Woverloaded-virtual -Wsign-promo -Werror -Wno-unused -Winvalid-pch -Wno-long-long -Wstrict-aliasing=3" )
 set ( CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS_RELEASE} -DNDEBUG -O3" )
 
-# find_package ( MPI ) # VTK dependancy
-# if ( MPI_FOUND )
-#   include_directories ( ${MPI_INCLUDE_PATH} )
-# endif ()
-
-#find_package( Qt5Widgets ) # VTK dependancy
-
 find_package ( GSL REQUIRED )
 include_directories(${GSL_INCLUDE_DIRS})
 
-find_package ( VTK 6.1 COMPONENTS vtkIOXML NO_MODULE )
-include(${VTK_USE_FILE})
+find_package ( VTK COMPONENTS vtkIOXML NO_MODULE )
+include_directories( SYSTEM ${VTK_INCLUDE_DIRS} )
 
-add_executable(pure_metal src/main.cpp src/approximation.cpp src/csplineinterpolant.cpp src/field.cpp src/messages.cpp src/options.cpp src/polynomialinterpolant.cpp src/postprocessor.cpp src/simulation.cpp src/specifications.cpp src/vtkfile.cpp )
+add_executable(pure_metal src/main.cpp src/approximation.cpp src/csplineinterpolant.cpp src/field.cpp src/messages.cpp src/options.cpp src/polynomialinterpolant.cpp src/postprocessor.cpp src/simulation.cpp src/specifications.cpp src/datfile.cpp src/visitfile.cpp src/vtkfile.cpp )
 
 target_link_libraries( pure_metal ${GSL_LIBRARIES} )
 target_link_libraries(pure_metal ${VTK_LIBRARIES})
-
-# target_link_libraries( pure_metal ${MPI_LIBRARIES} )
-
-# if ( MPI_COMPILE_FLAGS )
-#    set_target_properties( pure_metal PROPERTIES COMPILE_FLAGS "${MPI_COMPILE_FLAGS}" )
-# endif ()
-# 
-# if ( MPI_LINK_FLAGS )
-#     set_target_properties ( pure_metal PROPERTIES LINK_FLAGS "${MPI_LINK_FLAGS}" )
-# endif ()
 
 install(TARGETS pure_metal RUNTIME DESTINATION bin)

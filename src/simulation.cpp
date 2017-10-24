@@ -249,7 +249,7 @@ void PureMetal::Simulation::next_ts()
             + ( _a2->x ( i, j ) - _bxy->y ( i, j ) ) * _psi0->x ( i, j )
             + ( _bxy->x ( i, j ) + _a2->y ( i, j ) ) * _psi0->y ( i, j )
             + source
-        ) / a;
+        ) / a2;
     } );
     Field * Du = _approximation->create_field ( [ = ] ( unsigned i, unsigned j )-> double {
         const double & dpsi = ( *Dpsi ) ( i, j );

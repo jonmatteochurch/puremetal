@@ -50,7 +50,7 @@ public:
     inline VtkFile ( const std::string & path, const unsigned & timestep );
     ~VtkFile();
 
-    inline bool exists();
+    bool exists();
 
     inline std::string abs_path();
     inline std::string rel_path();
@@ -74,11 +74,6 @@ PureMetal::VtkFile::VtkFile ( const std::string & path, const unsigned & timeste
     _name = stream.str();
 }
 
-bool PureMetal::VtkFile::exists()
-{
-    std::ifstream file ( abs_path() );
-    return file.good();
-}
 
 std::string PureMetal::VtkFile::abs_path()
 {
