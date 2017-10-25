@@ -55,8 +55,8 @@ public:
 PureMetal::FullDomainApproximation::FullDomainApproximation ( const double * upper, const double * lower, const double * spacing )
     : Approximation()
 {
-    _size[0] = 1 + std::ceil ( upper[0] - lower[0] ) / spacing[0];
-    _size[1] = 1 + std::ceil ( upper[1] - lower[1] ) / spacing[1];
+    _size[0] = 1u + static_cast<unsigned> ( std::ceil ( ( upper[0] - lower[0] ) / spacing[0] ) );
+    _size[1] = 1u + static_cast<unsigned> ( std::ceil ( ( upper[1] - lower[1] ) / spacing[1] ) );
     _spacing[0] = spacing[0];
     _spacing[1] = spacing[1];
 }
@@ -78,22 +78,22 @@ PureMetal::ApproximationType PureMetal::FullDomainApproximation::type() const
 
 unsigned PureMetal::FullDomainApproximation::i ( const double & x ) const
 {
-    return std::floor ( x / _spacing[0] + _size[0] / 2. );
+    return static_cast<unsigned> ( x / _spacing[0] + _size[0] / 2. );
 }
 
 unsigned PureMetal::FullDomainApproximation::j ( const double & y ) const
 {
-    return std::floor ( y / _spacing[0] + _size[1] / 2. );
+    return static_cast<unsigned> ( y / _spacing[0] + _size[1] / 2. );
 }
 
 double PureMetal::FullDomainApproximation::x ( const unsigned & i ) const
 {
-    return _spacing[0] * ( i - std::floor ( _size[0] / 2. ) );
+    return _spacing[0] * ( i - static_cast<unsigned> ( _size[0] / 2. ) );
 }
 
 double PureMetal::FullDomainApproximation::y ( const unsigned & j ) const
 {
-    return _spacing[1] * ( j - std::floor ( _size[1] / 2. ) );
+    return _spacing[1] * ( j - static_cast<unsigned> ( _size[1] / 2. ) );
 }
 
 

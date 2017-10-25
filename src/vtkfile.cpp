@@ -76,7 +76,7 @@ void PureMetal::VtkFile::add_time ( const double & time )
 
 void PureMetal::VtkFile::add_scalar ( const std::string & name, const double * data )
 {
-    const unsigned &n = _grid->GetNumberOfPoints();
+    const auto &n = _grid->GetNumberOfPoints();
     vtkSmartPointer< vtkDoubleArray> array = vtkSmartPointer<vtkDoubleArray>::New();
     
     double * tmp = new double[n];

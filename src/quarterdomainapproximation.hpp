@@ -55,8 +55,8 @@ public:
 PureMetal::QuarterDomainApproximation::QuarterDomainApproximation ( const double * upper, const double * spacing )
     : Approximation ()
 {
-    _size[0] = 1 + std::ceil ( upper[0] ) / spacing[0];
-    _size[1] = 1 + std::ceil ( upper[1] ) / spacing[1];
+    _size[0] = 1u + static_cast<unsigned> ( std::ceil ( upper[0] / spacing[0] ) );
+    _size[1] = 1u + static_cast<unsigned> ( std::ceil ( upper[1] / spacing[1] ) );
     _spacing[0] = spacing[0];
     _spacing[1] = spacing[1];
 }
@@ -78,12 +78,12 @@ PureMetal::ApproximationType PureMetal::QuarterDomainApproximation::type() const
 
 unsigned PureMetal::QuarterDomainApproximation::i ( const double & x ) const
 {
-    return std::floor ( x / _spacing[0] );
+    return static_cast<unsigned> ( x / _spacing[0] );
 }
 
 unsigned PureMetal::QuarterDomainApproximation::j ( const double & y ) const
 {
-    return std::floor ( y / _spacing[1] );
+    return static_cast<unsigned> ( y / _spacing[1] );
 }
 
 double PureMetal::QuarterDomainApproximation::x ( const unsigned & i ) const
