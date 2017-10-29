@@ -35,7 +35,7 @@ int main ( int argc, char ** argv )
 
     switch ( specifications->time_type() ) {
     case TimeType::fixed : {
-        unsigned timesteps = specifications->max_time() / specifications->delt();
+        unsigned timesteps = 1u + static_cast<unsigned> ( specifications->max_time() / specifications->delt() );
         Simulation simulation ( specifications );
         if ( options->restart() ) {
             try {

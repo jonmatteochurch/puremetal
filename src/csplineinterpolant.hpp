@@ -40,17 +40,17 @@ class CSPLineInterpolant : public Interpolant
     gsl_function_fdf *fun;
 
     static double f ( double x, void * params ) {
-        CSPLineInterpolant * spline = static_cast<CSPLineInterpolant *> ( params );
-        return ( *spline ) ( x );
+        CSPLineInterpolant * spl = static_cast<CSPLineInterpolant *> ( params );
+        return ( *spl ) ( x );
     }
     static double df ( double x, void * params ) {
-        CSPLineInterpolant * spline = static_cast<CSPLineInterpolant *> ( params );
-        return spline->derivative ( x );
+        CSPLineInterpolant * spl = static_cast<CSPLineInterpolant *> ( params );
+        return spl->derivative ( x );
     }
     static void fdf ( double x, void * params, double * f, double * df )  {
-        CSPLineInterpolant * spline = static_cast<CSPLineInterpolant *> ( params );
-        *f = ( *spline ) ( x );
-        *df = spline->derivative ( x );
+        CSPLineInterpolant * spl = static_cast<CSPLineInterpolant *> ( params );
+        *f = ( *spl ) ( x );
+        *df = spl->derivative ( x );
     }
 
 public:

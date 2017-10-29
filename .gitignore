@@ -1,4 +1,7 @@
 .kdev4
+*.kdev4
+arc3
 dbg
 opt
 output
+scheduler

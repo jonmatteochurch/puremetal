@@ -97,7 +97,7 @@ PureMetal::Specifications::Specifications ( std::string input_file ) :
     if ( time_type_str == "fixed" ) {
         _time_type = TimeType::fixed;
         _delt = subtree.get<double> ( "delt" );
-        _max_timestep = subtree.get<double> ( "maxTime" );
+        _max_timestep = 0u;
         _max_time = subtree.get<double> ( "maxTime" );
     } else if ( time_type_str == "steady_state" ) {
         _time_type = TimeType::steady_state;
