@@ -99,13 +99,13 @@ int main ( int argc, char ** argv )
 
         if ( options->restart() ) {
             try {
-                simulation.restart ( specifications->delt(), specifications->steady_state_threshold() );
+                simulation.restart ( specifications->delt(), specifications->steady_state_threshold(), specifications->window_size() );
             } catch ( const std::exception & e ) {
                 std::cerr << e.what();
                 restart_error ( std::cout );
             }
         } else {
-            simulation.start ( specifications->delt(), specifications->steady_state_threshold() );
+            simulation.start ( specifications->delt(), specifications->steady_state_threshold(), specifications->window_size() );
             simulation.save();
         }
 
@@ -116,7 +116,7 @@ int main ( int argc, char ** argv )
                 delete options;
                 return 1;
             }
-            steady_state_progress_info ( std::cout, simulation.post_processor()->next_cell(), simulation.time(), simulation.post_processor()->cell_velocity0(), simulation.post_processor()->cell_velocity() );
+            steady_state_progress_info ( std::cout, simulation.steady_state_checkpoint(), simulation.time(), simulation.mean_v0(), simulation.mean_k10(), simulation.mean_k20(), simulation.mean_kpar0() );
             if ( simulation.save_timestep() ) {
                 simulation.save();
             }

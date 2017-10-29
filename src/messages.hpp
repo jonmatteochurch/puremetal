@@ -43,7 +43,7 @@ void restart_error ( std::ostream & os );
 void stability_error ( std::ostream & os );
 inline void fixed_progress_info ( std::ostream & os, const double & progress );
 inline void stable_progress_info ( std::ostream & os, const double & delt );
-inline void steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v0, const double & v );
+inline void steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v, const double & k1, const double & k2, const double & kpar );
     
 }
 
@@ -60,19 +60,25 @@ inline void PureMetal::stable_progress_info ( std::ostream & os, const double & 
     os << std::scientific << std::setprecision ( 5 ) << delt << std::endl;
 }
 
-inline void PureMetal::steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v0, const double & v )
+inline void PureMetal::steady_state_progress_info ( std::ostream & os, const bool & next_cell, const double & t, const double & v, const double & k1, const double & k2, const double & kpar )
 {
     if ( next_cell ) {
         os.width ( 10 );
         os << "Time: " ;
         os.width ( 10 );
         os << t;
-        os << "; Cell velocity: " ;
+        os << "; Mean velocity: " ;
         os.width ( 10 );
         os << v;
-        os << "; Delta: ";
+        os << "; Mean k1: " ;
         os.width ( 10 );
-        os << std::abs ( ( v - v0 ) / v );
+        os << k1;
+        os << "; Mean k2: " ;
+        os.width ( 10 );
+        os << k2;
+        os << "; Mean kpar: " ;
+        os.width ( 10 );
+        os << kpar;
         os << std::endl;
     }
 }

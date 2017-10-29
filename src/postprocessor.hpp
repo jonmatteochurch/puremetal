@@ -47,9 +47,6 @@ protected:
     double _t0;
     double _dt;
     double _dt0;
-    bool _next_cell;
-    double _cell_velocity0;
-    double _cell_velocity;
 
     DatFile * _out_dat;
 
@@ -61,9 +58,10 @@ public:
     inline virtual ~PostProcessor();
 
     inline const double & tip_position() const;
-    inline const bool & next_cell() const;
-    inline const double & cell_velocity0() const;
-    inline const double & cell_velocity() const;
+    inline const double & tip_velocity() const;
+    inline const double & tip_k1() const;
+    inline const double & tip_k2() const;
+    inline const double & tip_kpar() const;
 
     void process ( const Approximation * approximation, const unsigned & ts, const Field * psi, const double & delt );
 };
@@ -82,9 +80,6 @@ PureMetal::PostProcessor::PostProcessor ( const double & r0, const std::string &
       _t0 ( 0. ),
       _dt ( 0. ),
       _dt0 ( 0. ),
-      _next_cell ( false ),
-      _cell_velocity0 ( 0. ),
-      _cell_velocity ( 0. ),
       _out_dat ( new DatFile ( path, name, restart ) )
 {}
 
@@ -99,20 +94,24 @@ const double & PureMetal::PostProcessor::tip_position() const
     return _x;
 }
 
-const bool & PureMetal::PostProcessor::next_cell() const
+const double & PureMetal::PostProcessor::tip_velocity() const
 {
-    return _next_cell;
+    return _v;
 }
 
-const double & PureMetal::PostProcessor::cell_velocity0() const
+const double & PureMetal::PostProcessor::tip_k1() const
 {
-    return _cell_velocity0;
+    return _k1;
 }
 
-const double & PureMetal::PostProcessor::cell_velocity() const
+const double & PureMetal::PostProcessor::tip_k2() const
 {
-    return _cell_velocity;
+    return _k2;
 }
 
+const double & PureMetal::PostProcessor::tip_kpar() const
+{
+    return _kpar;
+}
 
 #endif // PUREMETAL_POSTPROCESSOR_HPP

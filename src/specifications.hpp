@@ -17,7 +17,7 @@
  *
  */
 
-#ifndef PSPECIFICATIONS_HPP
+#ifndef PUREMETAL_SPECIFICATIONS_HPP
 #define PUREMETAL_SPECIFICATIONS_HPP
 
 #include <string>
@@ -71,6 +71,7 @@ class Specifications
     // steady_state
     unsigned _max_timestep;
     double _steady_state_threshold;
+    unsigned _window_size;
 
     std::string _out_path;
     unsigned _out_interval;
@@ -114,6 +115,7 @@ public:
 
     inline const unsigned & max_timestep() const;
     inline const double & steady_state_threshold() const;
+    inline const unsigned & window_size() const;
 
     inline const std::string & out_path() const;
     inline const unsigned & out_interval() const;
@@ -220,6 +222,11 @@ const unsigned & PureMetal::Specifications::max_timestep() const
 const double & PureMetal::Specifications::steady_state_threshold() const
 {
     return _steady_state_threshold;
+}
+
+const unsigned & PureMetal::Specifications::window_size() const
+{
+    return _window_size;
 }
 
 const bool & PureMetal::Specifications::stability_check() const

@@ -103,6 +103,7 @@ PureMetal::Specifications::Specifications ( std::string input_file ) :
         _time_type = TimeType::steady_state;
         _delt = subtree.get<double> ( "delt" );
         _steady_state_threshold = subtree.get<double> ( "steady_state_threshold" );
+        _window_size = subtree.get<double> ( "window_size" );
     } else if ( time_type_str == "stable" ) {
         _time_type = TimeType::stable;
         _delt_max = subtree.get<double> ( "delt_max" );

@@ -76,17 +76,6 @@ void PureMetal::PostProcessor::process ( const Approximation * approximation, co
 
         _x = x0j[0];
 
-        unsigned cell = approximation->i ( _x );
-        _next_cell = cell > cell0;
-        if ( _next_cell ) {
-            _t0 = _t;
-            _dt0 = _dt;
-            _cell_velocity0 = _cell_velocity;
-            _t = delt / ( _x - _x0 ) * ( approximation->x ( cell ) - _x0 ) + delt * ( ts - 1 );
-            _dt = _t - _t0;
-            _cell_velocity = approximation->spacing ( 0 ) / _dt;
-        }
-
         _v = ( _x - _x0 ) / delt;
 
         Interpolant * px0 = this->create_interpolant ( y2j, x0j, 3 );

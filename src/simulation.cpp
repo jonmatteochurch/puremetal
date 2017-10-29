@@ -44,6 +44,16 @@ PureMetal::Simulation::Simulation ( const PureMetal::Specifications * specs ) :
     _maxts ( 0u ),
     _ts ( 0u ),
     _threshold ( 0. ),
+    _steady_state_checkpoint ( false ),
+    _mean_v0 ( 0. ),
+    _mean_v ( 0. ),
+    _mean_k10 ( 0. ),
+    _mean_k1 ( 0. ),
+    _mean_k20 ( 0. ),
+    _mean_k2 ( 0. ),
+    _mean_kpar0 ( 0. ),
+    _mean_kpar ( 0. ),
+    _window_size ( 0 ),
     _approximation ( nullptr ),
     _psi ( nullptr ),
     _u ( nullptr ),
@@ -155,10 +165,11 @@ void PureMetal::Simulation::start ( const double & delt, const unsigned & timest
     start();
 }
 
-void PureMetal::Simulation::start ( const double & delt, const double & steady_state_threshold )
+void PureMetal::Simulation::start ( const double & delt, const double & steady_state_threshold, const unsigned & window_size )
 {
     _delt = delt;
     _threshold = steady_state_threshold;
+    _window_size = window_size;
     start();
 }
 
@@ -198,10 +209,11 @@ void PureMetal::Simulation::restart ( const double & delt, const unsigned & time
     restart();
 }
 
-void PureMetal::Simulation::restart ( const double & delt, const double & steady_state_threshold )
+void PureMetal::Simulation::restart ( const double & delt, const double & steady_state_threshold, const unsigned & window_size )
 {
     _delt = delt;
     _threshold = steady_state_threshold;
+    _window_size = window_size;
     restart();
 }
 
@@ -272,14 +284,36 @@ bool PureMetal::Simulation::next()
     if ( _maxts ) {
         return _ts <= _maxts;
     }
-    if ( _threshold > 0 && post_processor()->next_cell() ) {
-        const double & v = post_processor()->cell_velocity();
-        const double & v0 = post_processor()->cell_velocity0();
-        double x = post_processor()->tip_position(), xm = _approximation->x ( _approximation->size ( 0 ) - 2 );
-        if ( x > xm ) {
+    if ( _threshold > 0 ) {
+        const double & v = post_processor()->tip_velocity();
+        const double & k1 = post_processor()->tip_k1();
+        const double & k2 = post_processor()->tip_k2();
+        const double & kpar = post_processor()->tip_kpar();
+
+        _mean_v += v/_window_size;
+        _mean_k1 += k1/_window_size;
+        _mean_k2 += k2/_window_size;
+        _mean_kpar += kpar/_window_size;
+
+        _steady_state_checkpoint = _ts%_window_size==0;
+
+        if ( _steady_state_checkpoint ) {
+            bool steady = std::abs ( ( _mean_v - _mean_v0 ) / _mean_v ) < _threshold
+                          && std::abs ( ( _mean_k1 - _mean_k10 ) / _mean_k1 ) < _threshold
+                          && std::abs ( ( _mean_k2 - _mean_k20 ) / _mean_k2 ) < _threshold
+                          && std::abs ( ( _mean_kpar - _mean_kpar0 ) / _mean_kpar ) < _threshold ;
+            _mean_v0 = _mean_v;
+            _mean_k10 = _mean_k1;
+            _mean_k20 = _mean_k2;
+            _mean_kpar0 = _mean_kpar;
+            _mean_v = _mean_k1 = _mean_k2 = _mean_kpar = 0.;
+            return !steady;
+        }
+
+        double x = post_processor()->tip_position(), xm = _approximation->x ( _approximation->size ( 0 ) - 10 );
+        if ( x > xm ) { // too close to boundary !!
             return false;
         }
-        return std::abs ( ( v - v0 ) / v ) > _threshold;
     }
     return true;
 }
